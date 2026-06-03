@@ -6,49 +6,53 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/dist/'
+    publicPath: './dist/'
   },
-  mode: 'development',
+  mode: 'production',
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.[jt]sx?$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
+            babelrc: false,
+            configFile: false,
+            presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript']
           }
         }
       },
       {
-        test: /\.css$/,
+        test: /\.css$/i,
         use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg|webp)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/[name][ext]'
+        }
       }
     ]
   },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
     fallback: {
-      "path": require.resolve("path-browserify"),
-      "fs": false,
-      "process": require.resolve("process/browser")
+      path: require.resolve('path-browserify'),
+      fs: false,
+      process: require.resolve('process/browser')
     }
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.EXPO_ROUTER_APP_ROOT': JSON.stringify('./app'),
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+      'process.env.EXPO_ROUTER_APP_ROOT': JSON.stringify('./app')
     }),
     new webpack.ProvidePlugin({
       process: 'process/browser'
     })
   ],
-  devServer: {
-    static: {
-      directory: path.join(__dirname, '/')
-    },
-    port: 3000,
-    hot: true
+  performance: {
+    hints: false
   }
 };

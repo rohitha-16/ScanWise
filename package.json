@@ -4,15 +4,11 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
-    "reset-project": "node ./scripts/reset-project.js",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "test": "jest --config jest.config.js --passWithNoTests",
-    "lint": "cross-env CI=1 expo lint",
-    "dev": "webpack --mode development",
-    "build": "webpack --mode production",
-    "serve": "webpack serve --mode development"
+    "build": "node build-vercel.js",
+    "serve": "npx serve public"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
@@ -65,8 +61,12 @@
     "react-test-renderer": "18.3.1",
     "style-loader": "^3.3.4",
     "typescript": "^5.5.4",
+    "webpack": "^5.99.5",
     "webpack-cli": "^6.0.1",
-    "webpack-dev-server": "^5.2.1"
+    "webpack-dev-server": "^5.2.1",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-private-methods": "^7.18.6",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   },
   "private": true
 }
